@@ -55,7 +55,6 @@ export const localVars: TSESLint.RuleModule<MessageId, []> = {
 
 /**
  * propsの命名規則
- * @todo fixable
  */
 export const suffix: TSESLint.RuleModule<MessageId, []> = {
   meta: {
