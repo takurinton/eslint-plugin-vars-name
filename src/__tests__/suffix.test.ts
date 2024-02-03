@@ -36,19 +36,46 @@ ruleTester.run("vars-name/suffix", suffix, {
   ],
   invalid: [
     // propsの別名が`xxxProp`という命名になっていない(arrow function)
+    // {
+    //   filename: "Component.tsx",
+    //   code: "const Component = ({ name: foo }: { name: string }) => <div>{foo}</div>;",
+    //   errors: [
+    //     {
+    //       messageId: "suffix",
+    //     },
+    //   ],
+    // },
+    // propsの別名が`xxxProp`という命名になっていない(function)
+    // {
+    //   filename: "Component.tsx",
+    //   code: "function Component({ name: foo }: { name: string }) { return <div>{foo}</div>; }",
+    //   errors: [
+    //     {
+    //       messageId: "suffix",
+    //     },
+    //   ],
+    // },
+
+    // fixable(arrow function)
+    // fixer書いてるけど、元の prop name が使われてる箇所までは直せない
     {
       filename: "Component.tsx",
       code: "const Component = ({ name: foo }: { name: string }) => <div>{foo}</div>;",
+      output:
+        "const Component = ({ name: nameProp }: { name: string }) => <div>{foo}</div>;",
       errors: [
         {
           messageId: "suffix",
         },
       ],
     },
-    // propsの別名が`xxxProp`という命名になっていない(function)
+    // fixable(function)
+    // fixer書いてるけど、元の prop name が使われてる箇所までは直せない
     {
       filename: "Component.tsx",
       code: "function Component({ name: foo }: { name: string }) { return <div>{foo}</div>; }",
+      output:
+        "function Component({ name: nameProp }: { name: string }) { return <div>{foo}</div>; }",
       errors: [
         {
           messageId: "suffix",

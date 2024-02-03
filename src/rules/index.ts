@@ -59,12 +59,13 @@ export const localVars: TSESLint.RuleModule<MessageId, []> = {
  */
 export const suffix: TSESLint.RuleModule<MessageId, []> = {
   meta: {
-    type: "suggestion",
+    type: "problem",
     docs: {
       description: "propsの別名は`xxxProp`という命名にしてください。",
       recommended: "recommended",
       url: "",
     },
+    fixable: "code",
     schema: [],
     messages,
   },
@@ -87,6 +88,10 @@ export const suffix: TSESLint.RuleModule<MessageId, []> = {
                     context.report({
                       node: value,
                       messageId: "suffix",
+                      // fixer書いてるけど、元の prop name が使われてる箇所までは直せない
+                      fix: (fixer) => {
+                        return fixer.replaceText(value, `${key.name}Prop`);
+                      },
                     });
                   }
                 }
@@ -106,6 +111,10 @@ export const suffix: TSESLint.RuleModule<MessageId, []> = {
                     context.report({
                       node: value,
                       messageId: "suffix",
+                      // fixer書いてるけど、元の prop name が使われてる箇所までは直せない
+                      fix: (fixer) => {
+                        return fixer.replaceText(value, `${key.name}Prop`);
+                      },
                     });
                   }
                 }
