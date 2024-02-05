@@ -83,6 +83,9 @@ export const suffix: TSESLint.RuleModule<MessageId, []> = {
               if (property.type === "Property") {
                 const { key, value } = property;
                 if (key.type === "Identifier" && value.type === "Identifier") {
+                  if (key.name === value.name) {
+                    return;
+                  }
                   if (`${key.name}Prop` !== value.name) {
                     context.report({
                       node: value,
@@ -106,6 +109,9 @@ export const suffix: TSESLint.RuleModule<MessageId, []> = {
               if (property.type === "Property") {
                 const { key, value } = property;
                 if (key.type === "Identifier" && value.type === "Identifier") {
+                  if (key.name === value.name) {
+                    return;
+                  }
                   if (`${key.name}Prop` !== value.name) {
                     context.report({
                       node: value,
