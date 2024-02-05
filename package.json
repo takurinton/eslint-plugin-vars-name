@@ -12,7 +12,7 @@
     "vitest": "1.2.2"
   },
   "name": "@takurinton/eslint-plugin-vars-name",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "files": [
     "dist",
@@ -20,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/takurinton/eslint-plugin-.vars-name.git"
+    "url": "git+https://github.com/takurinton/eslint-plugin-vars-name.git"
   },
   "scripts": {
     "build": "rm -rf dist && tsc",
