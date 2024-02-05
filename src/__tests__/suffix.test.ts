@@ -28,6 +28,26 @@ ruleTester.run("vars-name/suffix", suffix, {
       filename: "Component.tsx",
       code: "function Component({ name: nameProp }: { name: string }) { return <div>{nameProp}</div>; }",
     },
+    // 別名をつけていないときは対象外(arrow function)
+    {
+      filename: "Component.tsx",
+      code: "function Component({ name }: { name: string }) { return <div>{name}</div>; }",
+    },
+    // 別名をつけていないときは対象外(function)
+    {
+      filename: "Component.tsx",
+      code: "function Component({ name }: { name: string }) { return <div>{name}</div>; }",
+    },
+    // 別名とkeyの名前が同じときは対象外(arrow function)
+    {
+      filename: "Component.tsx",
+      code: "function Component({ name: name }: { name: string }) { return <div>{name}</div>; }",
+    },
+    // 別名とkeyの名前が同じときは対象外(function)
+    {
+      filename: "Component.tsx",
+      code: "function Component({ name: name }: { name: string }) { return <div>{name}</div>; }",
+    },
     // .tsファイルは対象外
     {
       filename: "foo.ts",
