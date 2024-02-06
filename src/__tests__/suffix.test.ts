@@ -48,6 +48,16 @@ ruleTester.run("vars-name/suffix", suffix, {
       filename: "Component.tsx",
       code: "function Component({ name: name }: { name: string }) { return <div>{name}</div>; }",
     },
+    // デフォルト値を入れている場合(arrow function)
+    {
+      filename: "Component.tsx",
+      code: "const Component = ({ name = 'foo' }: { name: string }) => <div>{name}</div>;",
+    },
+    // デフォルト値を入れている場合(function)
+    {
+      filename: "Component.tsx",
+      code: "function Component({ name = 'foo' }: { name: string }) { return <div>{name}</div>; }",
+    },
     // .tsファイルは対象外
     {
       filename: "foo.ts",
@@ -96,6 +106,30 @@ ruleTester.run("vars-name/suffix", suffix, {
       code: "function Component({ name: foo }: { name: string }) { return <div>{foo}</div>; }",
       output:
         "function Component({ name: nameProp }: { name: string }) { return <div>{foo}</div>; }",
+      errors: [
+        {
+          messageId: "suffix",
+        },
+      ],
+    },
+    // デフォルト値を入れている場合(arrow function)
+    {
+      filename: "Component.tsx",
+      code: "const Component = ({ name: _name = 'foo' }: { name: string }) => <div>{_name}</div>;",
+      output:
+        "const Component = ({ name: nameProp = 'foo' }: { name: string }) => <div>{_name}</div>;",
+      errors: [
+        {
+          messageId: "suffix",
+        },
+      ],
+    },
+    // デフォルト値を入れている場合(function)
+    {
+      filename: "Component.tsx",
+      code: "function Component({ name: _name = 'foo' }: { name: string }) { return <div>{_name}</div>; }",
+      output:
+        "function Component({ name: nameProp = 'foo' }: { name: string }) { return <div>{_name}</div>; }",
       errors: [
         {
           messageId: "suffix",

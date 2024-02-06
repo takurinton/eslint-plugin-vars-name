@@ -82,19 +82,40 @@ export const suffix: TSESLint.RuleModule<MessageId, []> = {
             param.properties.forEach((property) => {
               if (property.type === "Property") {
                 const { key, value } = property;
-                if (key.type === "Identifier" && value.type === "Identifier") {
-                  if (key.name === value.name) {
-                    return;
-                  }
-                  if (`${key.name}Prop` !== value.name) {
-                    context.report({
-                      node: value,
-                      messageId: "suffix",
-                      // fixer書いてるけど、元の prop name が使われてる箇所までは直せない
-                      fix: (fixer) => {
-                        return fixer.replaceText(value, `${key.name}Prop`);
-                      },
-                    });
+                if (key.type === "Identifier") {
+                  if (value.type === "Identifier") {
+                    if (key.name === value.name) {
+                      return;
+                    }
+                    if (`${key.name}Prop` !== value.name) {
+                      context.report({
+                        node: value,
+                        messageId: "suffix",
+                        // fixer書いてるけど、元の prop name が使われてる箇所までは直せない
+                        fix: (fixer) => {
+                          return fixer.replaceText(value, `${key.name}Prop`);
+                        },
+                      });
+                    }
+                  } else if (value.type === "AssignmentPattern") {
+                    if (value.left.type === "Identifier") {
+                      if (key.name === value.left.name) {
+                        return;
+                      }
+                      if (`${key.name}Prop` !== value.left.name) {
+                        context.report({
+                          node: value.left,
+                          messageId: "suffix",
+                          // fixer書いてるけど、元の prop name が使われてる箇所までは直せない
+                          fix: (fixer) => {
+                            return fixer.replaceText(
+                              value.left,
+                              `${key.name}Prop`
+                            );
+                          },
+                        });
+                      }
+                    }
                   }
                 }
               }
@@ -108,19 +129,40 @@ export const suffix: TSESLint.RuleModule<MessageId, []> = {
             param.properties.forEach((property) => {
               if (property.type === "Property") {
                 const { key, value } = property;
-                if (key.type === "Identifier" && value.type === "Identifier") {
-                  if (key.name === value.name) {
-                    return;
-                  }
-                  if (`${key.name}Prop` !== value.name) {
-                    context.report({
-                      node: value,
-                      messageId: "suffix",
-                      // fixer書いてるけど、元の prop name が使われてる箇所までは直せない
-                      fix: (fixer) => {
-                        return fixer.replaceText(value, `${key.name}Prop`);
-                      },
-                    });
+                if (key.type === "Identifier") {
+                  if (value.type === "Identifier") {
+                    if (key.name === value.name) {
+                      return;
+                    }
+                    if (`${key.name}Prop` !== value.name) {
+                      context.report({
+                        node: value,
+                        messageId: "suffix",
+                        // fixer書いてるけど、元の prop name が使われてる箇所までは直せない
+                        fix: (fixer) => {
+                          return fixer.replaceText(value, `${key.name}Prop`);
+                        },
+                      });
+                    }
+                  } else if (value.type === "AssignmentPattern") {
+                    if (value.left.type === "Identifier") {
+                      if (key.name === value.left.name) {
+                        return;
+                      }
+                      if (`${key.name}Prop` !== value.left.name) {
+                        context.report({
+                          node: value.left,
+                          messageId: "suffix",
+                          // fixer書いてるけど、元の prop name が使われてる箇所までは直せない
+                          fix: (fixer) => {
+                            return fixer.replaceText(
+                              value.left,
+                              `${key.name}Prop`
+                            );
+                          },
+                        });
+                      }
+                    }
                   }
                 }
               }
