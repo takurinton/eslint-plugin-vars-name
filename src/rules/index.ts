@@ -28,10 +28,7 @@ export const localVars: TSESLint.RuleModule<MessageId, []> = {
     return {
       JSXOpeningElement(node) {
         node.attributes.forEach((attribute) => {
-          if (
-            attribute.type === "JSXAttribute" &&
-            attribute.name.name === "name"
-          ) {
+          if (attribute.type === "JSXAttribute") {
             const value = attribute.value;
             if (value && value.type === "JSXExpressionContainer") {
               const expression = value.expression;
