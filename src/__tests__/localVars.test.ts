@@ -47,7 +47,7 @@ ruleTester.run("vars-name/local-vars", localVars, {
     },
   ],
   invalid: [
-    // コンポーネントのpropsに`_`が先頭についている値は渡すことができる(arrow function)
+    // コンポーネントのpropsに`_`が先頭についている変数は渡すことができない(arrow function)
     {
       filename: "Component.tsx",
       code: `
@@ -61,13 +61,41 @@ ruleTester.run("vars-name/local-vars", localVars, {
         },
       ],
     },
-    // コンポーネントのpropsに`_`が先頭についている値は渡すことができる(function)
+    // コンポーネントのpropsに`_`が先頭についている変数は渡すことができない(function)
     {
       filename: "Component.tsx",
       code: `
           const Component = ({ name }: { name: string }) => { return <div>{name}</div>; };
           const _name = "foo";
           <Component name={_name} />
+          `,
+      errors: [
+        {
+          messageId: "local_vars",
+        },
+      ],
+    },
+    // コンポーネントのpropsに`_`が先頭についている関数は渡すことができない(arrow function)
+    {
+      filename: "Component.tsx",
+      code: `
+          const Component = ({ name }: { name: string }) => { return <div>{name}</div>; };
+          const _foo = () => {};
+          <Component name={_foo} />
+      `,
+      errors: [
+        {
+          messageId: "local_vars",
+        },
+      ],
+    },
+    // コンポーネントのpropsに`_`が先頭についている関数は渡すことができない(function)
+    {
+      filename: "Component.tsx",
+      code: `
+          const Component = ({ name }: { name: string }) => { return <div>{name}</div>; };
+          const _foo = () => {};
+          <Component name={_foo} />
           `,
       errors: [
         {
